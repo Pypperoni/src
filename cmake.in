@@ -47,6 +47,7 @@ if (UNIX)
     endif()
 else()
     link_directories($$python_root$$/build/win64)
+    link_directories($$python_root$$/build/Release)
 endif()
 
 set(_FILES

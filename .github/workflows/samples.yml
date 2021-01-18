@@ -17,7 +17,7 @@ jobs:
         python-version: 3.6.8
     - name: Install dependencies
       run: |
-        sudo apt-get install -y cmake gcc g++ python3-dev libz-dev libssl-dev
+        sudo apt-get install -y cmake build-essential gcc g++ python3-dev libz-dev libssl-dev liblzma-dev
     - name: Clone Pypperoni/Python-3.6.8
       uses: actions/checkout@v2
       with:
@@ -28,7 +28,7 @@ jobs:
         cd pypperoni/python
         mkdir -p build/linux2
         cd build/linux2
-        cmake ..
+        cmake ../..
         make -j
     - name: Clone Pypperoni/samples
       uses: actions/checkout@v2
@@ -40,7 +40,7 @@ jobs:
         cd pypperoni/samples/00-hello_world
         python3.6 build.py
         cd build
-        cmake ..
+        cmake .
         make -j
     - name: Run 00-hello_world
       run: |

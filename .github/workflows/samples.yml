@@ -17,7 +17,7 @@ jobs:
         python-version: 3.6.8
     - name: Install dependencies
       run: |
-        sudo apt-get install -y cmake build-essential gcc g++ python3-dev libz-dev libssl-dev liblzma-dev lldb-5.0
+        sudo apt-get install -y cmake build-essential gcc g++ python3-dev libz-dev libssl-dev liblzma-dev libgdbm-dev
     - name: Clone Pypperoni/Python-3.6.8
       uses: actions/checkout@v2
       with:

@@ -1,0 +1,48 @@
+name: Build and run samples
+
+on: [push]
+
+jobs:
+  build-samples:
+    name: Build samples
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        path: pypperoni/pypperoni
+    - name: Set up Python 3.6.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.6.8
+    - name: Install dependencies
+      run: |
+        sudo apt-get install -y cmake gcc g++ python3-dev libz-dev libopenssl-dev
+    - name: Clone Pypperoni/Python-3.6.8
+      uses: actions/checkout@v2
+      with:
+        name: Pypperoni/Python-3.6.8
+        path: pypperoni/python
+    - name: Build Pypperoni/Python-3.6.8
+      run: |
+        cd pypperoni/python
+        mkdir -p build/linux2
+        cd build/linux2
+        cmake ..
+        make -j
+    - name: Clone Pypperoni/samples
+      uses: actions/checkout@v2
+      with:
+        name: Pypperoni/samples
+        path: pypperoni/samples
+    - name: Build 00-hello_world
+      run: |
+        cd pypperoni/samples/00-hello_world
+        python3.6 build.py
+        cd build
+        cmake ..
+        make -j
+    - name: Run 00-hello_world
+      run: |
+        cd pypperoni/samples/00-hello_world/build
+        ./00-hello_world

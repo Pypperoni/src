@@ -2,8 +2,12 @@ name: Build and run samples
 
 on: [push]
 
-anchors:
-  setup-steps: &setup-steps
+jobs:
+  sample-00:
+    name: 00-hello_world
+    runs-on: ubuntu-latest
+
+    steps:
     - uses: actions/checkout@v2
       with:
         path: pypperoni/pypperoni
@@ -31,14 +35,6 @@ anchors:
       with:
         repository: Pypperoni/samples
         path: pypperoni/samples
-
-jobs:
-  sample-00:
-    name: 00-hello_world
-    runs-on: ubuntu-latest
-
-    steps:
-    - *setup-steps
     - name: Build 00-hello_world
       run: |
         cd pypperoni/samples/00-hello_world
@@ -58,7 +54,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - *setup-steps
+    - uses: actions/checkout@v2
+      with:
+        path: pypperoni/pypperoni
+    - name: Set up Python 3.6.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.6.8
+    - name: Install dependencies
+      run: |
+        sudo apt-get install -y cmake build-essential gcc g++ python3-dev libz-dev libssl-dev liblzma-dev libgdbm-dev
+    - name: Clone Pypperoni/Python-3.6.8
+      uses: actions/checkout@v2
+      with:
+        repository: Pypperoni/Python-3.6.8
+        path: pypperoni/python
+    - name: Build Pypperoni/Python-3.6.8
+      run: |
+        cd pypperoni/python
+        mkdir -p build/linux2
+        cd build/linux2
+        cmake ../..
+        make -j
+    - name: Clone Pypperoni/samples
+      uses: actions/checkout@v2
+      with:
+        repository: Pypperoni/samples
+        path: pypperoni/samples
     - name: Build 01-basic
       run: |
         cd pypperoni/samples/01-basic
@@ -78,7 +100,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - *setup-steps
+    - uses: actions/checkout@v2
+      with:
+        path: pypperoni/pypperoni
+    - name: Set up Python 3.6.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.6.8
+    - name: Install dependencies
+      run: |
+        sudo apt-get install -y cmake build-essential gcc g++ python3-dev libz-dev libssl-dev liblzma-dev libgdbm-dev
+    - name: Clone Pypperoni/Python-3.6.8
+      uses: actions/checkout@v2
+      with:
+        repository: Pypperoni/Python-3.6.8
+        path: pypperoni/python
+    - name: Build Pypperoni/Python-3.6.8
+      run: |
+        cd pypperoni/python
+        mkdir -p build/linux2
+        cd build/linux2
+        cmake ../..
+        make -j
+    - name: Clone Pypperoni/samples
+      uses: actions/checkout@v2
+      with:
+        repository: Pypperoni/samples
+        path: pypperoni/samples
     - name: Build 02-exceptions
       run: |
         cd pypperoni/samples/02-exceptions
@@ -98,7 +146,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - *setup-steps
+    - uses: actions/checkout@v2
+      with:
+        path: pypperoni/pypperoni
+    - name: Set up Python 3.6.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.6.8
+    - name: Install dependencies
+      run: |
+        sudo apt-get install -y cmake build-essential gcc g++ python3-dev libz-dev libssl-dev liblzma-dev libgdbm-dev
+    - name: Clone Pypperoni/Python-3.6.8
+      uses: actions/checkout@v2
+      with:
+        repository: Pypperoni/Python-3.6.8
+        path: pypperoni/python
+    - name: Build Pypperoni/Python-3.6.8
+      run: |
+        cd pypperoni/python
+        mkdir -p build/linux2
+        cd build/linux2
+        cmake ../..
+        make -j
+    - name: Clone Pypperoni/samples
+      uses: actions/checkout@v2
+      with:
+        repository: Pypperoni/samples
+        path: pypperoni/samples
     - name: Build 03-async
       run: |
         cd pypperoni/samples/03-async
@@ -118,7 +192,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - *setup-steps
+    - uses: actions/checkout@v2
+      with:
+        path: pypperoni/pypperoni
+    - name: Set up Python 3.6.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.6.8
+    - name: Install dependencies
+      run: |
+        sudo apt-get install -y cmake build-essential gcc g++ python3-dev libz-dev libssl-dev liblzma-dev libgdbm-dev
+    - name: Clone Pypperoni/Python-3.6.8
+      uses: actions/checkout@v2
+      with:
+        repository: Pypperoni/Python-3.6.8
+        path: pypperoni/python
+    - name: Build Pypperoni/Python-3.6.8
+      run: |
+        cd pypperoni/python
+        mkdir -p build/linux2
+        cd build/linux2
+        cmake ../..
+        make -j
+    - name: Clone Pypperoni/samples
+      uses: actions/checkout@v2
+      with:
+        repository: Pypperoni/samples
+        path: pypperoni/samples
     - name: Build 04-threading
       run: |
         cd pypperoni/samples/04-threading

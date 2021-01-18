@@ -21,7 +21,7 @@ jobs:
     - name: Clone Pypperoni/Python-3.6.8
       uses: actions/checkout@v2
       with:
-        name: Pypperoni/Python-3.6.8
+        repository: Pypperoni/Python-3.6.8
         path: pypperoni/python
     - name: Build Pypperoni/Python-3.6.8
       run: |
@@ -33,7 +33,7 @@ jobs:
     - name: Clone Pypperoni/samples
       uses: actions/checkout@v2
       with:
-        name: Pypperoni/samples
+        repository: Pypperoni/samples
         path: pypperoni/samples
     - name: Build 00-hello_world
       run: |

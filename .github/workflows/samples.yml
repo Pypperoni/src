@@ -137,7 +137,7 @@ jobs:
     - name: Run 02-exceptions
       run: |
         cd pypperoni/samples/02-exceptions/build
-        ./02-exceptions
+        ./02-exceptions catchall
         cd ..
         rm -rf build
 

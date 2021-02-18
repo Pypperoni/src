@@ -29,24 +29,25 @@ Additionally, by preprocessing the bytecode there may be a performance boost in 
 When Pypperoni is ran, it will compile all of your Python application's source code (`*.py`) into Python bytecode (`*.pyc`). An example of Python bytecode is shown below:
 
 ```
-15 SETUP_LOOP              41 (to 59)
-18 LOAD_NAME                1 (enumerate)
+0 SETUP_LOOP              32 (to 34)
+2 LOAD_NAME                0 (enumerate)
 ```
 
 Next, Pypperoni will read through the bytecode, interpreting the Python OP codes into the equivalent Python C API calls; this is what we call "preprocessing the bytecode." The following example is the output from preprocessing the above bytecode:
 
-```
-label_15:
-// SETUP_LOOP (15 -> 59)
-PyDict_SetItem(f->f_stacklevel, __pypperoni_pyint(15), __pypperoni_pyint(STACK_LEVEL()));
-
-label_18:
+```c
+label_0:
 {
-  x = __pypperoni_IMPL_load_name(f, __pypperoni_const2str(__example_get_const(4)) /* enumerate */);
+  void* __addr;
+  GET_ADDRESS(__addr, label_34, 34);
+  PyFrame_BlockSetup(f, 120, __addr, STACK_LEVEL());
+}
+label_2:
+{
+  x = __pypperoni_IMPL_load_name(f, __consts_main[0]); /* 'enumerate' */
   if (x == NULL) {
-    f->f_exci = 18;
-    f->f_excline = 2;
-    goto error;
+  f->f_lineno = 5;
+  goto error;
   }
   Py_INCREF(x);
   PUSH(x);

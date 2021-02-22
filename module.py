@@ -551,8 +551,6 @@ class Module(ModuleBase):
             context.end_block()
 
         elif op == BUILD_CONST_KEY_MAP:
-            context.add_decl_once('i', 'int', None, False)
-
             context.begin_block()
 
             context.insert_line('x = POP(); /* keys */')
@@ -564,25 +562,22 @@ class Module(ModuleBase):
             context.insert_handle_error(line, label)
             context.end_block()
 
-            context.insert_line('for (i = %d; i > 0; i--)' % oparg)
-            context.begin_block()
-            context.insert_line('v = PyTuple_GET_ITEM(x, %d - i);' % oparg)
-            context.insert_line('w = PEEK(0 + i);')
-            context.insert_line('err = PyDict_SetItem(u, v, w);')
-            context.insert_line('if (err != 0)')
+            for i in range(oparg):
+                context.insert_line('v = PyTuple_GET_ITEM(x, %d);' % i)
+                context.insert_line('w = PEEK(%d);' % (oparg - i))
+                context.insert_line('err = PyDict_SetItem(u, v, w);')
 
-            context.begin_block()
-            context.insert_line('Py_DECREF(u);')
-            context.insert_handle_error(line, label)
-            context.end_block()
+                context.insert_line('if (err != 0)')
+                context.begin_block()
+                context.insert_line('Py_DECREF(u);')
+                context.insert_handle_error(line, label)
+                context.end_block()
 
-            context.end_block()
+            context.insert_line('Py_DECREF(x); /* keys */')
 
-            context.insert_line('for (i = %d; i > 0; i--)' % oparg)
-            context.begin_block()
-            context.insert_line('x = POP();')
-            context.insert_line('Py_DECREF(x);')
-            context.end_block()
+            for i in range(oparg):
+                context.insert_line('x = POP();')
+                context.insert_line('Py_DECREF(x);')
 
             context.insert_line('PUSH(u);')
 
